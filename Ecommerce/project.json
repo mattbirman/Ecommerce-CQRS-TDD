@@ -15,7 +15,10 @@
     "Microsoft.Extensions.Logging": "1.0.0",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
-    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0"
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Moq": "4.6.38-alpha",
+    "xunit": "2.2.0-beta3-build3402"
   },
 
   "tools": {

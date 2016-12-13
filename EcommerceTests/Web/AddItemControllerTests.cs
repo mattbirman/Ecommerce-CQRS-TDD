@@ -1,56 +1,59 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using Xunit;
 
 namespace EcommerceTests.Web
 {
     public class AddItemControllerTests
     {
+        private readonly Mock<ICommandBus> _mockCommandBus;
+        private readonly AddItemController _addItemController;
+
         public AddItemControllerTests()
         {
+            _mockCommandBus = new Mock<ICommandBus>();
+            _addItemController = new AddItemController(_mockCommandBus.Object);
         }
 
         [Fact]
         public void GivenAnAddItemRequestIsValid_WhenAnAddItemRequestIsReceived_ThenAnAddItemCommandIsSent()
         {
             //Setup
-            var mockCommandBus = new Mock<ICommandBus>();
-            var addItemController = new AddItemController(mockCommandBus.Object);
-            var addItemRequest = new AddItemRequest();
-
+            var addItemRequest = new AddItemRequest(Guid.NewGuid());
 
             //Act
-            addItemController.PostAction(addItemRequest);
+            _addItemController.PostAction(addItemRequest);
 
             //Test
-            mockCommandBus.Verify(x => x.Send(It.IsAny<AddItemCommand>()));
+            _mockCommandBus.Verify(x => x.Send(It.IsAny<AddItemCommand>()));
         }
-    }
 
-    public interface ICommandBus
-    {
-        void Send(AddItemCommand @is);
-    }
-
-    public class AddItemCommand
-    {
-    }
-
-    public class AddItemRequest
-    {
-    }
-
-    public class AddItemController
-    {
-        private readonly ICommandBus _commandBus;
-
-        public AddItemController(ICommandBus commandBus)
+        [Fact]
+        public void GivenTheUserEntersInvalidData_WhenAnAddItemRequestIsReceived_ThenAnAddItemCommandIsNotSent()
         {
-            _commandBus = commandBus;
+            //Setup
+            var addItemRequest = new AddItemRequest(Guid.Empty);
+
+            //Act
+            _addItemController.PostAction(addItemRequest);
+
+            //Test
+            _mockCommandBus.Verify(x => x.Send(It.IsAny<AddItemCommand>()), Times.Never);
         }
 
-        public void PostAction(AddItemRequest addItemRequest)
+        [Fact]
+        public void GivenTheUserEntersInvalidData_WhenAnAddItemRequestIsReceived_ThenAnAddItemControllerShouldReturn400StatusCode()
         {
-            _commandBus.Send(new AddItemCommand());
+            //Setup
+            var addItemRequest = new AddItemRequest(Guid.Empty);
+
+            //Act
+            _addItemController.PostAction(addItemRequest);
+
+            //Test
+//            Assert.Equal(Ba,_addItemController.PostAction(addItemRequest));
         }
     }
+
+
 }
