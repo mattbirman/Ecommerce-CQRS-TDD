@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using WebApi;
 
-namespace WebApi
+namespace Ecommerce
 {
     public class Program
     {

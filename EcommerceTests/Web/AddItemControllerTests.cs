@@ -1,6 +1,7 @@
 ﻿using System;
 using Moq;
 using Xunit;
+using Ecommerce.Controllers;
 
 namespace EcommerceTests.Web
 {
