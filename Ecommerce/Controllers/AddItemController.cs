@@ -12,13 +12,14 @@ namespace Ecommerce.Controllers
             _commandBus = commandBus;
         }
 
-        public StatusCodeResult PostAction(AddItemRequest addItemRequest)
+        public ActionResult PostAction(AddItemRequest addItemRequest)
         {
             if (IsNotValid(addItemRequest))
                 return BadRequest();
 
             _commandBus.Send(new AddItemCommand());
-            return Ok();
+
+            return Created("item/" + addItemRequest.Id, new Item(addItemRequest.Id));
         }
 
         private static bool IsNotValid(AddItemRequest addItemRequest)
