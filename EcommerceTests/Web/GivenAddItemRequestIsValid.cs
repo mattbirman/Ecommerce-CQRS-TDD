@@ -76,7 +76,7 @@ namespace EcommerceTests.Web
             var result = AddItemController.PostAction(AddItemRequest) as BadRequestResult;
 
             //Test
-            Assert.Equal(400, result.StatusCode);
+            Assert.Equal(400, result?.StatusCode);
         }
     }
 }
